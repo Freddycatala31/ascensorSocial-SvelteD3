@@ -1,0 +1,62 @@
+[
+    {
+        "ccaa": "Cataluña",
+        "centil_hijo_loess": "54.53267772895142"
+    },
+    {
+        "ccaa": "Aragón",
+        "centil_hijo_loess": "53.611168123268975"
+    },
+    {
+        "ccaa": "La Rioja",
+        "centil_hijo_loess": "52.26429740390724"
+    },
+    {
+        "ccaa": "Comunidad de Madrid",
+        "centil_hijo_loess": "51.525951316842"
+    },
+    {
+        "ccaa": "Illes Balears",
+        "centil_hijo_loess": "51.43514630712429"
+    },
+    {
+        "ccaa": "Castilla y León",
+        "centil_hijo_loess": "48.55616356993866"
+    },
+    {
+        "ccaa": "Castilla - La Mancha",
+        "centil_hijo_loess": "48.269473740692064"
+    },
+    {
+        "ccaa": "Cantabria",
+        "centil_hijo_loess": "47.294486836461516"
+    },
+    {
+        "ccaa": "Galicia",
+        "centil_hijo_loess": "45.65694734548401"
+    },
+    {
+        "ccaa": "Principado de Asturias",
+        "centil_hijo_loess": "44.836450964893515"
+    },
+    {
+        "ccaa": "Comunitat Valenciana",
+        "centil_hijo_loess": "44.26266339103828"
+    },
+    {
+        "ccaa": "Región de Murcia",
+        "centil_hijo_loess": "43.83130800296368"
+    },
+    {
+        "ccaa": "Extremadura",
+        "centil_hijo_loess": "40.21112005717551"
+    },
+    {
+        "ccaa": "Canarias",
+        "centil_hijo_loess": "40.17135646220216"
+    },
+    {
+        "ccaa": "Andalucí­a",
+        "centil_hijo_loess": "39.04138445927376"
+    }
+]
