@@ -41,43 +41,43 @@
   $: dataRadarRico = extraerDatosRadar(quintilesPadresHijos, '80-100');
 </script>
 
-<main>
-  <header>
-    <h1>El Ascensor Social en España</h1>
+<main class="dark bg-gradient-to-br from-indigo-900 to-blue-700 text-white">
+  <header class="bg-blue-900 p-6 p-10  rounded-md mb-8 text-center shadow-xl/20 w-5/6 h-auto mx-auto">
+    <h1 class="text-4xl font-bold text-indigo-100">El Ascensor Social en España</h1>
     <p>Un análisis visual sobre la movilidad intergeneracional de la renta.</p>
   </header>
 
 
-  <section class="">
-    <div class="">
-      <h2>La Curva de Movilidad</h2>
-      <p>Comparativa entre la riqueza de los padres (Eje X) y la de los hijos (Eje Y).</p>
-      
+  <section class="w-5/6 mx-auto bg-gradient-to-br from-yellow-200 to-amber-300 p-6 rounded-md mb-8 shadow-xl/40 ">
+    <div>
+      <h2 class="text-2xl font-semibold  text-blue-950">La Curva de Movilidad</h2>
+      <p class="text-sky-800 mb-4">Comparativa entre la riqueza de los padres (Eje X) y la de los hijos (Eje Y).</p>
       <MobilityChart data={mobilityData} />
     </div>
   </section>
-  <section class="">
-    <div class="card calculator">
-      <h2>Calculadora de Realidad</h2>
-      <p>¿Cuánto dinero real es un percentil?</p>
+  <section class="flex grid grid-cols-3 gap-6 text-center justify-center h-auto w-5/6 mx-auto mb-8">
+    
+    <div class="bg-gradient-to-b from-yellow-200 to-amber-300 p-6 rounded-md mb-8 shadow-xl/40 col-span-2">
+      <h2 class="text-2xl font-semibold  text-blue-950">Calculadora de Realidad</h2>
+      <p class="text-sky-800 mb-4">¿Cuánto dinero real es un percentil?</p>
       
       <CalculoIngresos data={conversorHijos} />
     </div>
-    <div class="card">
-      <h2>Matriz de Transición</h2>
-      <p>Probabilidad de moverse entre clases sociales.</p>
+    <div class="col-span-1 bg-gradient-to-br from-amber-300 to-yellow-200 p-6 rounded-md mb-8 shadow-xl/40">
+      <h2 class="text-2xl font-semibold  text-blue-950">Matriz de Transición</h2>
+      <p class="text-sky-800 mb-4">Probabilidad de moverse entre clases sociales.</p>
       <TransitionHeatmap data={quintilesPadresHijos} />
     </div>
   </section>
-  <section class="">
-    <div class="card">
-      <h2>Ranking por Comunidades Autónomas</h2>
-      <p>¿Dónde es más fácil ascender socialmente si naces pobre?</p>
+  <section class="w-5/6 mx-auto bg-gradient-to-b from-yellow-200 to-yellow-400 p-6 rounded-md mb-8 shadow-xl/40">
+    <div class="card p-6">
+      <h2 class="text-2xl font-semibold  text-blue-950">Ranking por Comunidades Autónomas</h2>
+      <p class="text-sky-800 mb-4">¿Dónde es más fácil ascender socialmente si naces pobre?</p>
       <RadialRegiones data={ccaaData} />
     </div>
   </section>
 
-
+<br> <!-- Ver si hay alguna mejor manera de lograr el efecto de q no se corte el fondo -->
 
 <!-- 
   <section class="hero-grid">

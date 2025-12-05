@@ -7,7 +7,7 @@
   // CONFIGURACIÓN VISUAL
   let containerWidth;
   let width = 800;
-  let height = 500;
+  let height = 400;
   let margin = { top: 40, right: 30, bottom: 60, left: 70 }; // Márgenes ajustados para las etiquetas
 
   // REFERENCIAS DOM
@@ -18,13 +18,17 @@
   $: innerWidth = width - margin.left - margin.right;
   $: innerHeight = height - margin.top - margin.bottom;
 
+  // configurar tamaño trazo/puntos(responsive, si los trazos seguian con el mismo grosor no se podia ver correctamente la grafica)
+  $: dotRadius = containerWidth < 640 ? 2 : containerWidth < 1024 ? 2.5 : 3.5;
+  $: lineStrokeWidth = containerWidth < 600 ? 1.5 : containerWidth < 1024 ? 2 : 3;
+
   // 2. ESCALAS
   $: xScale = d3.scaleLinear()
     .domain([0, 100])
     .range([0, innerWidth]);
 
   $: yScale = d3.scaleLinear()
-    .domain([0, 100])
+    .domain([35, 85])
     .range([innerHeight, 0]);
 
   // 3. GENERADORES DE EJES Y REJILLA
@@ -32,7 +36,7 @@
     // Eje X con rejilla vertical completa (tickSize negativa)
     d3.select(gx)
       .call(d3.axisBottom(xScale).ticks(10).tickSize(-innerHeight))
-      .call(g => g.selectAll(".tick line").attr("stroke", "#e2e8f0").attr("stroke-dasharray", "2,2")) // Rejilla discontinua gris
+      .call(g => g.selectAll(".tick line").attr("stroke", "#5A57BD").attr("stroke-dasharray", "2,2")) // Rejilla discontinua gris
       .call(g => g.select(".domain").remove()); // Quitamos la línea negra base del eje
   }
   
@@ -40,7 +44,7 @@
     // Eje Y con rejilla horizontal completa
     d3.select(gy)
       .call(d3.axisLeft(yScale).ticks(10).tickSize(-innerWidth))
-      .call(g => g.selectAll(".tick line").attr("stroke", "#e2e8f0").attr("stroke-dasharray", "2,2"))
+      .call(g => g.selectAll(".tick line").attr("stroke", "#5A57BD").attr("stroke-dasharray", "2,2"))
       .call(g => g.select(".domain").remove());
   }
 
@@ -61,8 +65,8 @@
         bind:this={gx} 
         transform="translate(0, {innerHeight})" 
         font-family="sans-serif" 
-        font-size="12" 
-        color="#718096"
+        font-size="22" 
+        color="#0A1845"
       />
       <text 
         x={innerWidth / 2} 
@@ -80,7 +84,7 @@
         bind:this={gy} 
         font-family="sans-serif" 
         font-size="12" 
-        color="#718096"
+        color="#0A1845"
       />
       <text 
         transform="rotate(-90)" 
@@ -100,9 +104,9 @@
           <circle 
             cx={xScale(+d.centil_padres)} 
             cy={yScale(+d.centil_hijo)} 
-            r="3" 
+            r={dotRadius} 
             fill="steelblue" 
-            opacity="0.4"
+            opacity="0.8"
           />
         {/each}
       </g>
@@ -111,8 +115,8 @@
       <path 
         d={lineGenerator(data)} 
         fill="none" 
-        stroke="#1a365d" 
-        stroke-width="3" 
+        stroke="#07133D" 
+        stroke-width={lineStrokeWidth} 
         stroke-linecap="round"
       />
 
@@ -120,11 +124,3 @@
   </svg>
 </div>
 
-<style>
-  .chart-container {
-    width: 100%;
-    height: auto;
-    /* Tipografía limpia */
-    font-family: system-ui, -apple-system, sans-serif;
-  }
-</style>
