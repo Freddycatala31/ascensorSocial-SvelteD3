@@ -1,12 +1,12 @@
 <script>
   import * as d3 from 'd3';
 
-  // Recibimos los datos crudos del JSON
-  // Formato esperado: [{quintil_padres: "0-20", "0-20": 24.8, "20-40": 22.5...}, ...]
+  // Recibimos datos JSON
+  // [{quintil_padres: "0-20", "0-20": 24.8, "20-40": 22.5...}, ...]
   export let data = [];
 
-  let width = 500;
-  let height = 500;
+  let width = 400;
+  let height = 400;
   let margin = { top: 30, right: 0, bottom: 0, left: 50 };
 
   // Definimos los nombres de los quintiles en orden
@@ -37,10 +37,6 @@
     }
   }
 
-  // ---------------------------------------------------------
-  // 2. ESCALAS D3
-  // ---------------------------------------------------------
-  
   // Escala para ejes X e Y (Bandas discretas)
   $: x = d3.scaleBand()
     .range([margin.left, width])
@@ -67,12 +63,21 @@
       {#each groups as group}
         <text
           x={x(group) + x.bandwidth() / 2}
-          y={-5}
+          y={-15}
           text-anchor="middle"
           font-size="12"
           fill="#666"
         >
-          Hijos {group}%
+          Hijos
+        </text>
+        <text
+          x={x(group) + x.bandwidth() / 2}
+          y={-3}
+          text-anchor="middle"
+          font-size="12"
+          fill="#666"
+        >
+          {group}%
         </text>
       {/each}
     </g>
@@ -81,13 +86,23 @@
       {#each groups as group}
         <text
           x={margin.left - 10}
-          y={y(group) + y.bandwidth() / 2}
+          y={y(group) + y.bandwidth() / 2 - 6}
           text-anchor="end"
           alignment-baseline="middle"
-          font-size="12"
+          font-size="10"
           fill="#666"
         >
-          Padres {group}%
+          Padres
+        </text>
+        <text
+          x={margin.left - 10}
+          y={y(group) + y.bandwidth() / 2 + 6}
+          text-anchor="end"
+          alignment-baseline="middle"
+          font-size="9"
+          fill="#666"
+        >
+          {group}%
         </text>
       {/each}
     </g>
@@ -113,7 +128,7 @@
         dy=".35em"
         text-anchor="middle"
         fill={cell.value > 20 ? 'white' : 'black'}
-        font-size="12"
+        font-size="13"
         font-weight="bold"
       >
         {cell.value.toFixed(0)}%

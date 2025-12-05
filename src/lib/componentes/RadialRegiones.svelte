@@ -17,7 +17,7 @@
   let containerWidth;
   let width = 800; // Valor por defecto
   let height = 600; // Altura fija suficiente para las 17 CCAA
-  let margin = { top: 40, right: 40, bottom: 50, left: 160 }; // Izquierda amplia para nombres largos
+  let margin = { top: 40, right: 40, bottom: 50, left: 220 }; // Izquierda amplia para nombres largos
 
   // Reactividad para ajustar ancho
   $: if (containerWidth) width = containerWidth;
@@ -45,7 +45,7 @@
   // Escala de color (Azul oscuro para valores altos)
   $: colorScale = d3.scaleSequential()
     .domain([minVal, maxVal])
-    .interpolator((d3.interpolatePlasma));
+    .interpolator((d3.interpolateBlues));
 
 </script>
 
@@ -56,8 +56,8 @@
       
       {#each xScale.ticks(5) as tick}
         <g transform="translate({xScale(tick)}, 0)">
-          <line y1="0" y2={innerHeight} stroke="#d4f4f0" stroke-dasharray="5" />
-          <text y={innerHeight + 20} text-anchor="middle" font-size="12" fill="#a0aec0">
+          <line y1="0" y2={innerHeight} stroke="#1F3582" stroke-dasharray="5" />
+          <text y={innerHeight + 20} text-anchor="middle" font-size="12" fill="#2d3748">
             {tick}
           </text>
         </g>
@@ -71,8 +71,8 @@
             x2={xScale(d.centil_hijo_loess)} 
             y1={yScale(d.ccaa) + yScale.bandwidth() / 2} 
             y2={yScale(d.ccaa) + yScale.bandwidth() / 2} 
-            stroke="#cbd5e0" 
-            stroke-width="2" 
+            stroke="#4860B0" 
+            stroke-width="3" 
           />
 
           <circle 
@@ -102,7 +102,7 @@
             x={xScale(d.centil_hijo_loess) + 15} 
             y={yScale(d.ccaa) + yScale.bandwidth() / 2} 
             dy=".35em" 
-            font-size="12" 
+            font-size="13" 
             font-weight="bold" 
             fill={colorScale(d.centil_hijo_loess)}
           >
@@ -117,10 +117,10 @@
         y={innerHeight + 45} 
         text-anchor="middle" 
         font-size="12" 
-        fill="#718096" 
+        fill="#2b6cb0" 
         font-style="italic"
       >
-        Puntuación de Ascensor Social (Mayor es mejor)
+        Puntuación de Ascensor Social 
       </text>
 
     </g>
@@ -146,9 +146,7 @@
     stroke-width: 2px;
   }
   
-  .lollipop-group:hover line {
-    stroke: #4a5568; /* Oscurece la línea */
-  }
+  
   
   .lollipop-group:hover text {
     fill: #2d3748; /* Oscurece el texto */
