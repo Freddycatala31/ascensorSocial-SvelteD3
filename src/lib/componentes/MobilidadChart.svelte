@@ -1,19 +1,19 @@
 <script>
   import * as d3 from 'd3';
 
-  // DATOS
+  // datos
   export let data = []; 
 
-  // CONFIGURACIÓN VISUAL
+  // tamaño
   let containerWidth;
   let width = 800;
   let height = 400;
   let margin = { top: 40, right: 30, bottom: 60, left: 70 }; // Márgenes ajustados para las etiquetas
 
-  // REFERENCIAS DOM
+  // referencias al dom de los ejes
   let gx, gy;
 
-  // 1. DIMENSIONES REACTIVAS
+  // responsive
   $: if (containerWidth) width = containerWidth;
   $: innerWidth = width - margin.left - margin.right;
   $: innerHeight = height - margin.top - margin.bottom;
@@ -22,16 +22,16 @@
   $: dotRadius = containerWidth < 640 ? 2 : containerWidth < 1024 ? 2.5 : 3.5;
   $: lineStrokeWidth = containerWidth < 600 ? 1.5 : containerWidth < 1024 ? 2 : 3;
 
-  // 2. ESCALAS
+  // escalas
   $: xScale = d3.scaleLinear()
     .domain([0, 100])
     .range([0, innerWidth]);
 
   $: yScale = d3.scaleLinear()
-    .domain([35, 85])
+    .domain([35, 85]) //Empezamos en 35 para centrar mejor la gráfica y optimizar el espacio de la pagina
     .range([innerHeight, 0]);
 
-  // 3. GENERADORES DE EJES Y REJILLA
+  // Generar ejes y rejilla
   $: if (gx) {
     // Eje X con rejilla vertical completa (tickSize negativa)
     d3.select(gx)
@@ -48,7 +48,7 @@
       .call(g => g.select(".domain").remove());
   }
 
-  // 4. LÍNEA DE TENDENCIA
+  //línea de tendencia suavizada
   $: lineGenerator = d3.line()
     .x(d => xScale(+d.centil_padres))
     .y(d => yScale(+d.centil_hijo_loess))

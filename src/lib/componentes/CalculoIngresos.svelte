@@ -1,13 +1,13 @@
 <script>
   import * as d3 from 'd3';
 
-  // Props
+  // datos
   export let data = [];
 
   // Dimensiones
   let containerWidth;
   let width = 600; 
-  let height = 480;
+  let height = 500;
   let margin = { top: 20, right: 20, bottom: 50, left: 65 }; 
 
   // Estado
@@ -15,12 +15,12 @@
   let gx; // Referencia para el Eje X
   let gy; // Referencia para el Eje Y
 
-  // 1. REACTIVIDAD
+  // reactividad
   $: if (containerWidth) width = containerWidth;
   $: innerWidth = Math.max(0, width - margin.left - margin.right); 
   $: innerHeight = height - margin.top - margin.bottom;
 
-  // 2. ESCALAS
+  // escalas
   $: xScale = d3.scaleLinear()
     .domain([0, 100])
     .range([0, innerWidth]);
@@ -30,25 +30,25 @@
     .range([innerHeight, 0])
     .nice();
 
-  // 3. GENERACIÓN DE EJES 
+  // Generar ejes y rejilla 
   $: if (gx) {
     d3.select(gx)
       .call(
         d3.axisBottom(xScale)
-          .ticks(50) // Grid densa (líneas cada 2 percentiles)
+          .ticks(50) // Grid 
           .tickSize(-innerHeight) 
           .tickFormat(d => d % 10 === 0 ? d + '%' : '') // Texto solo cada 10
           .tickPadding(10)
       )
-      // A. ESTILO LÍNEA DEL EJE (EL BORDE INFERIOR)
+      // estilo borde inferior 
       .call(g => g.select(".domain")
-        .attr("stroke", "#718096") // Color gris oscuro visible
-        .attr("stroke-width", "3") // Un poco más grueso
+        .attr("stroke", "#718096") 
+        .attr("stroke-width", "3") 
       )
-      // B. ESTILO REJILLA INTERNA (SUAVE Y DISCONTINUA)
+      // estilo Grid
       .call(g => g.selectAll(".tick line")
-        .attr("stroke", "#6B7FC9")      // Grid gris claro
-        .attr("stroke-dasharray", "3") // Efecto discontinuo (---)
+        .attr("stroke", "#6B7FC9")      //Grid
+        .attr("stroke-dasharray", "3") // Efecto discontinuo ---
       );
   }
 
@@ -60,26 +60,26 @@
           .tickSize(-innerWidth) 
           .tickFormat(d => d >= 1000 ? (d/1000) + 'k €' : d + ' €') 
       )
-      // A. ESTILO LÍNEA DEL EJE (EL BORDE IZQUIERDO)
+      // estilo borde izquierdo
       .call(g => g.select(".domain")
         .attr("stroke", "#718096") 
         .attr("stroke-width", "2")
       )
-      // B. ESTILO REJILLA INTERNA
+      // estilo Grid
       .call(g => g.selectAll(".tick line")
         .attr("stroke", "#6B7FC9")
         .attr("stroke-dasharray", "3")
       );
   }
 
-  // 4. GENERADOR DE ÁREA
+  // generador de área
   $: areaGenerator = d3.area()
     .x(d => xScale(+d.centil))
     .y0(innerHeight)
     .y1(d => yScale(+d.renta))
     .curve(d3.curveMonotoneX);
 
-  // 5. LÓGICA DE INTERACCIÓN
+  // lógica de interacción
   const bisect = d3.bisector(d => d.centil).center;
 
   function handleMouseMove(event) {

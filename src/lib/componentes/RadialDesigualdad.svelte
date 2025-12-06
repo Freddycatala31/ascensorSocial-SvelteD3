@@ -1,7 +1,7 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
   import Chart from 'chart.js/auto';
-
+  
   // Props: Arrays de números [24.5, 22.1, ...]
   export let dataPobre = [];
   export let dataRico = [];
