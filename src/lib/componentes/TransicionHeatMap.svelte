@@ -1,8 +1,6 @@
 <script>
   import * as d3 from 'd3';
 
-  // Recibimos datos JSON
-  // [{quintil_padres: "0-20", "0-20": 24.8, "20-40": 22.5...}, ...]
   export let data = [];
 
   let width = 400;
@@ -12,44 +10,38 @@
   // Definimos los nombres de los quintiles en orden
   const groups = ['0-20', '20-40', '40-60', '60-80', '80-100'];
 
-  // ---------------------------------------------------------
-  // 1. TRANSFORMACIÓN DE DATOS (Wide -> Long)
-  // ---------------------------------------------------------
+  //Datos de wide -Z long
   let flatData = [];
 
-  // Usamos la sintaxis reactiva $: para que si 'data' cambia, esto se recalcule
+  
   $: {
     flatData = [];
     if (data && data.length > 0) {
-      // Recorremos cada fila (Origen / Padres)
       data.forEach(row => {
         const parentQ = row['quintil_padres']; 
-        
-        // Recorremos cada columna (Destino / Hijos)
         groups.forEach(childQ => {
           flatData.push({
             parent: parentQ,         // Eje Y
             child: childQ,           // Eje X
-            value: +row[childQ]      // Valor numérico (probabilidad)
+            value: +row[childQ]      // probabilidad
           });
         });
       });
     }
   }
 
-  // Escala para ejes X e Y (Bandas discretas)
+ 
   $: x = d3.scaleBand()
     .range([margin.left, width])
     .domain(groups)
     .padding(0.05);
 
   $: y = d3.scaleBand()
-    .range([height - margin.top, 0]) // Invertido para que 0-20 esté abajo (opcional)
+    .range([height - margin.top, 0]) 
     .domain(groups)
     .padding(0.05);
 
   // Escala de Color (Probabilidad baja = claro, Probabilidad alta = oscuro)
-  // Ajustamos el dominio de 0 a 30 (pues los valores suelen estar entre 10% y 30%)
   $: color = d3.scaleSequential()
     .interpolator(d3.interpolateYlGnBu) 
     .domain([5, 30]);

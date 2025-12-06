@@ -1,11 +1,11 @@
 <script>
   import * as d3 from 'd3';
 
-  // 1. Recibimos los datos "crudos" (posiblemente strings)
+  
   export let data = [];
 
-  // 2. SANEAMIENTO DE DATOS (IMPORTANTE)
-  // Convertimos "54.3" (texto) a 54.3 (número) usando el símbolo '+'
+  // tratar datos
+  // transformar strings en int
   $: cleanData = data
     .map(d => ({
       ...d,
@@ -13,28 +13,28 @@
     }))
     .filter(d => !isNaN(d.centil_hijo_loess)); // Filtramos errores
 
-  // 3. DIMENSIONES RESPONSIVE
+  // tamaño
   let containerWidth;
-  let width = 800; // Valor por defecto
-  let height = 600; // Altura fija suficiente para las 17 CCAA
-  let margin = { top: 40, right: 40, bottom: 50, left: 220 }; // Izquierda amplia para nombres largos
+  let width = 800; 
+  let height = 600; 
+  let margin = { top: 40, right: 40, bottom: 50, left: 220 }; 
 
-  // Reactividad para ajustar ancho
+  // responsive
   $: if (containerWidth) width = containerWidth;
   $: innerWidth = width - margin.left - margin.right;
   $: innerHeight = height - margin.top - margin.bottom;
 
-  // 4. ORDENACIÓN (Mejor comunidad arriba)
+  // ordenar datos
   $: sortedData = [...cleanData].sort((a, b) => b.centil_hijo_loess - a.centil_hijo_loess);
 
-  // 5. ESCALAS
-  // Eje Y: Nombres de CCAA
+ 
+  // ejeY comunidades
   $: yScale = d3.scaleBand()
     .domain(sortedData.map(d => d.ccaa))
     .range([0, innerHeight])
     .padding(0.5);
 
-  // Eje X: Valores (Hacemos zoom entre el min y el max para que se vean las diferencias)
+  // ejeX valores
   $: minVal = d3.min(cleanData, d => d.centil_hijo_loess) || 40;
   $: maxVal = d3.max(cleanData, d => d.centil_hijo_loess) || 60;
 
@@ -42,7 +42,7 @@
     .domain([minVal - 1, maxVal + 0.5]) 
     .range([0, innerWidth]);
 
-  // Escala de color (Azul oscuro para valores altos)
+  // ColorTemplate de D3
   $: colorScale = d3.scaleSequential()
     .domain([minVal, maxVal])
     .interpolator((d3.interpolateBlues));
@@ -130,7 +130,6 @@
 <style>
   .chart-wrapper {
     width: 100%;
-    /* Aseguramos que no se desborde */
     overflow: hidden; 
   }
 
